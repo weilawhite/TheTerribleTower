@@ -6,10 +6,10 @@ import java.awt.event.KeyEvent;
 public class GameClient extends JFrame {
     static int SWidth = 400;
     static int SHeight = 600;
-    int mazeWidth=7;
-    int mazeHeight=7;
+    int mazeWidth = 7;
+    int mazeHeight = 7;
     JLabel status, levelMap, mainMessage;
-    String messageTemp="<html><body> ";
+    String messageTemp = "<html><body> ";
     PlayerState playerState = PlayerState.MOVE;
     int[][] map;
 
@@ -76,26 +76,35 @@ public class GameClient extends JFrame {
             public void keyPressed(KeyEvent e) {
                 frame.repaint();
                 if (playerState == PlayerState.MOVE) {
+                    Boolean move = false;
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_UP: //case 0
                             System.out.println("UP");
-                            if (checkThisMove(-1, 0, player.getPosX(), player.getPosY()))
+                            if (checkThisMove(-1, 0, player.getPosX(), player.getPosY())) {
                                 player.move(0);
+                                move = true;
+                            }
                             break;
                         case KeyEvent.VK_DOWN: //case 1
                             System.out.println("DOWN");
-                            if (checkThisMove(1, 0, player.getPosX(), player.getPosY()))
+                            if (checkThisMove(1, 0, player.getPosX(), player.getPosY())) {
                                 player.move(1);
+                                move = true;
+                            }
                             break;
                         case KeyEvent.VK_LEFT: //case 2
                             System.out.println("LEFT");
-                            if (checkThisMove(0, -1, player.getPosX(), player.getPosY()))
+                            if (checkThisMove(0, -1, player.getPosX(), player.getPosY())) {
                                 player.move(2);
+                                move = true;
+                            }
                             break;
                         case KeyEvent.VK_RIGHT: //case 3
                             System.out.println("RIGHT");
-                            if (checkThisMove(0, 1, player.getPosX(), player.getPosY()))
+                            if (checkThisMove(0, 1, player.getPosX(), player.getPosY())) {
                                 player.move(3);
+                                move = true;
+                            }
                             break;/*
                         case KeyEvent.VK_ENTER:
                             System.out.println("ENTER");
@@ -104,11 +113,13 @@ public class GameClient extends JFrame {
                         default:
                             return;
                     }
-                    System.out.println("X:" + player.getPosX() + ",Y:" + player.getPosY());
-                    playerState = PlayerState.EVENT;
-                    drawMap(player.getPosX(), player.getPosY());
-                }
-                else if (playerState == PlayerState.EVENT) {
+
+                    if (move) {
+                        System.out.println("X:" + player.getPosX() + ",Y:" + player.getPosY());
+                        playerState = PlayerState.EVENT;
+                        drawMap(player.getPosX(), player.getPosY());
+                    }
+                } else if (playerState == PlayerState.EVENT) {
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_ENTER:
                             //System.out.println("ROLL");
@@ -116,7 +127,7 @@ public class GameClient extends JFrame {
                             System.out.println("ROLL:" + roll);
                             String message = MapEvent.NE(roll, player);
 
-                            messageTemp=messageTemp+"<br>"+message;
+                            messageTemp = messageTemp + "<br>" + message;
                             mainMessage.setText(messageTemp);
 
                             System.out.println(message);
@@ -133,8 +144,8 @@ public class GameClient extends JFrame {
 
     private Boolean checkThisMove(int xShift, int yShift, int xPos, int yPos) {
 
-        if (xPos + xShift < 0 || xPos + xShift > mazeWidth-1) return false;
-        if (yPos + yShift < 0 || yPos + yShift > mazeHeight-1) return false;
+        if (xPos + xShift < 0 || xPos + xShift > mazeWidth - 1) return false;
+        if (yPos + yShift < 0 || yPos + yShift > mazeHeight - 1) return false;
         if (map[xPos + xShift][yPos + yShift] == 0) return false;
         return true;
     }
