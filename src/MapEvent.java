@@ -22,7 +22,7 @@ public class MapEvent {
         }else {
             stringBuilder.append("你沒有找到任何東西");
         }
-        stringBuilder.append("<br>");
+        stringBuilder.append("<br>\n");
         return stringBuilder.toString();
     }
 

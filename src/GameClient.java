@@ -8,7 +8,8 @@ public class GameClient extends JFrame {
     static int SHeight = 600;
     int mazeWidth = 7;
     int mazeHeight = 7;
-    JLabel status, levelMap, mainMessage;
+    JLabel status, levelMap;
+    JTextArea mainMessage;
     String messageTemp = "<html><body> ";
     PlayerState playerState = PlayerState.MOVE;
     int[][] map;
@@ -29,6 +30,7 @@ public class GameClient extends JFrame {
 
     public GameClient() {
         JFrame frame = new JFrame();
+
         JPanel main = new JPanel();
         JPanel second = new JPanel();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,8 +46,14 @@ public class GameClient extends JFrame {
 
         status = new JLabel();
         levelMap = new JLabel();
-        mainMessage = new JLabel();
-
+        mainMessage = new JTextArea();
+        mainMessage.setEditable(false);
+        mainMessage.setEnabled(false);
+        //mainMessage.setColumns(600);
+        mainMessage.setLineWrap(true);        //激活自动换行功能
+        mainMessage.setSize(350,350);
+        //mainMessage.getAutoscrolls();
+        //mainMessage.setWrapStyleWord(true);
         statusTextRefresh(player);
         status.setFont(new Font(null, Font.BOLD, 20));
         levelMap.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
